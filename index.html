@@ -15,7 +15,7 @@
       height: 100%;
       font-family: "Inter", -apple-system, sans-serif;
       overflow: hidden;
-      background: url('media/bg.gif') center/auto 55% no-repeat fixed;
+      background: url('media/bg.gif') center center / cover no-repeat fixed;
       background-color: #060b1a;
       color: #dffcff;
     }
@@ -230,7 +230,7 @@
         <i class="ri-feedback-line" style="font-size:21px"></i>
       </div>
       <div class="ma-btn" onclick="navigate('app/settings.html', null)" title="Settings">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.86a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.14 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.5a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8.82 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.42.17.89.12 1.28-.11.38-.23.68-.59.82-.98a2 2 0 0 1 3.4 1.6c-.05.4-.2.78-.46 1.09-.27.31-.61.53-1 .64A1.65 1.65 0 0 0 19.4 15z"/></svg>
       </div>
     </div>
 
@@ -308,7 +308,7 @@
     if (!localStorage.getItem('menuHintSeen')) {
       setTimeout(() => {
         const h = document.createElement('div');
-        h.innerHTML = `<div style="position:fixed;bottom:90px;left:16px;z-index:2000;background:rgba(103,232,255,0.9);color:#060b1a;padding:12px 18px;border-radius:14px;font-size:0.85rem;font-family:Inter;font-weight:600;box-shadow:0 0 20px rgba(103,232,255,0.3);">💡 Tap the menu button to get started!</div>`;
+        h.innerHTML = `<div style="position:fixed;bottom:90px;left:16px;z-index:2000;background:rgba(103,232,255,0.9);color:#060b1a;padding:12px 18px;border-radius:14px;font-size:0.85rem;font-family:Inter,system-ui,sans-serif;box-shadow:0 8px 20px rgba(0,0,0,0.28);">Menu hint: hover or tap the button to open navigation.</div>`;
         document.body.appendChild(h);
         localStorage.setItem('menuHintSeen', '1');
         setTimeout(() => h.remove(), 4000);
