@@ -1,39 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Rat Games Pr0xy</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<title>Neon Arcade Feedback</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1b1b1b,#0a0a0a);color:white;display:flex;flex-direction:column;justify-content:space-between;align-items:center;}
-.center{flex:1;display:flex;align-items:center;justify-content:center;}
-.main-btn{font-size:3rem;padding:30px 80px;border-radius:18px;border:none;background:linear-gradient(135deg,#c0622f,#d97840);color:white;cursor:pointer;box-shadow:0 20px 40px rgba(0,0,0,0.6);transition:transform 0.15s ease,box-shadow 0.15s ease;}
-.main-btn:hover{transform:scale(1.05);box-shadow:0 30px 60px rgba(0,0,0,0.8);}
-.bottom{width:100%;padding:25px 20px 35px;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);}
-.bottom h2{margin:0 0 15px;text-align:center;font-size:1.3rem;opacity:0.9;}
-.button-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;max-width:1100px;margin:0 auto;}
-.alt-btn{padding:12px 10px;border-radius:10px;border:none;background:#222;color:white;cursor:pointer;font-size:0.95rem;transition:background 0.15s ease,transform 0.1s ease;}
-.alt-btn:hover{background:#333;transform:translateY(-2px);}
-@media(max-width:600px){.main-btn{font-size:2.2rem;padding:25px 50px;}}
+  :root {
+    --bg0: #060b1a;
+    --bg1: #0b1220;
+    --bg2: #111827;
+    --panel: rgba(12, 17, 31, 0.78);
+    --panel-strong: rgba(10, 17, 31, 0.92);
+    --stroke: rgba(103, 232, 255, 0.2);
+    --stroke-strong: rgba(103, 232, 255, 0.38);
+    --text: #dffcff;
+    --muted: #9ac7d3;
+    --input: rgba(3, 8, 18, 0.4);
+    --input-2: rgba(103, 232, 255, 0.05);
+    --accent: #67e8ff;
+    --accent-2: #8b5cf6;
+    --pink: #ff4fd8;
+    --star-yellow: #ffcc66;
+    --ease: cubic-bezier(.18,.98,.22,1);
+    --speed: 220ms;
+  }
+
+  * { box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    margin:0; font-family: Inter, system-ui, Arial, sans-serif; color: var(--text); overflow:hidden; background: transparent; position:relative;
+  }
+
+  body::before {
+    content:''; position:fixed; inset:0; background: linear-gradient(to bottom, rgba(6,11,26,0.14) 0%, rgba(6,11,26,0.4) 45%, rgba(6,11,26,0.72) 100%); z-index:0; pointer-events:none;
+  }
+
+  .grid {
+    position:fixed; inset:0; pointer-events:none; opacity:.2; background: repeating-linear-gradient(to right, rgba(255,255,255,.08) 0px, rgba(255,255,255,.08) 1px, transparent 1px, transparent 74px), repeating-linear-gradient(to bottom, rgba(255,255,255,.08) 0px, rgba(255,255,255,.08) 1px, transparent 1px, transparent 74px); mask-image: radial-gradient(circle at 50% 45%, rgba(0,0,0,.92), rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 78%); z-index:1;
+  }
+
+  .grain {
+    position:fixed; inset:0; pointer-events:none; opacity:.08; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.12'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:240px 240px; z-index:1;
+  }
+
+  .wrap { min-height:100%; display:flex; align-items:center; justify-content:center; padding:18px; position:relative; z-index:2; }
+
+  .panel {
+    width:100%; max-width:480px; border-radius:20px; padding:16px; border:1px solid var(--stroke); background: linear-gradient(180deg, rgba(103,232,255,0.12), rgba(103,232,255,0.04)); box-shadow: 0 28px 110px rgba(0,0,0,0.6), 0 0 0 1px rgba(103,232,255,0.05) inset, 0 0 70px rgba(103,232,255,0.08); backdrop-filter: blur(18px) saturate(150%); transform: translateY(10px) scale(.98); opacity:0; filter: blur(10px); animation: popIn 680ms var(--ease) forwards 70ms; position:relative; overflow:hidden;
+  }
+  .panel::before {
+    content:""; position:absolute; inset:-60%; background: conic-gradient(from 120deg, rgba(103,232,255,0.28), rgba(139,92,246,0.14), rgba(103,232,255,0.1), rgba(103,232,255,0.28)); filter: blur(30px); opacity:.55; pointer-events:none;
+  }
+  .panelInner { position:relative; z-index:2; }
+
+  @keyframes popIn { to { opacity:1; transform:translateY(0) scale(1); filter: blur(0); } }
+
+  .header { display:flex; flex-direction:column; gap:6px; text-align:center; padding:6px 6px 10px; }
+  h2 { margin:0; font-size:20px; letter-spacing:.2px; font-weight:900; color: var(--text); }
+  .sub { margin:0; font-size:12.5px; color: var(--muted); line-height:1.35; }
+
+  .form { display:flex; flex-direction:column; gap:10px; padding-top:6px; }
+  label { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12.5px; font-weight:900; color: rgba(223,252,255,0.84); margin-top:2px; }
+  label small { font-weight:700; font-size:11.5px; color: rgba(223,252,255,0.62); }
+
+  .field {
+    border-radius:16px; border:1px solid rgba(103,232,255,0.12); background: var(--input); box-shadow:0 18px 46px rgba(0,0,0,0.35); overflow:hidden; transition: transform var(--speed) var(--ease), border-color var(--speed) var(--ease), background var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+  }
+  .field:focus-within { transform: translateY(-2px); border-color: rgba(103,232,255,0.4); background: rgba(3,8,18,0.3); box-shadow:0 22px 56px rgba(0,0,0,0.42); }
+
+  input[type="email"], textarea { width:100%; padding:12px 14px; border:0; outline:none; background:transparent; color: var(--text); font-size:14px; letter-spacing:.1px; }
+  input::placeholder, textarea::placeholder { color: rgba(223,252,255,0.42); }
+  textarea { height:110px; resize:none; line-height:1.35; }
+
+  .types { display:flex; gap:10px; }
+  .tbtn {
+    flex:1; height:44px; border-radius:999px; border:1px solid rgba(103,232,255,0.12); background: rgba(3,8,18,0.18); color: rgba(223,252,255,0.7); cursor:pointer; font-weight:900; font-size:13px; transition: transform var(--speed) var(--ease), border-color var(--speed) var(--ease), background var(--speed) var(--ease), box-shadow var(--speed) var(--ease); user-select:none; position:relative; overflow:hidden;
+  }
+  .tbtn.active { background: linear-gradient(180deg, rgba(103,232,255,0.16), rgba(3,8,18,0.12)); border-color: rgba(103,232,255,0.45); color: var(--text); box-shadow:0 16px 42px rgba(103,232,255,0.12); }
+
+  .starsWrap {
+    border-radius:16px; border:1px solid rgba(103,232,255,0.12); background: rgba(3,8,18,0.16); padding:10px 10px 12px; box-shadow:0 18px 46px rgba(0,0,0,0.32); transition: transform var(--speed) var(--ease), border-color var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+  }
+  .stars { display:flex; justify-content:center; gap:10px; font-size:44px; cursor:pointer; user-select:none; }
+  .star { color: rgba(255,255,255,0.18); transition: transform 140ms var(--ease), color 140ms var(--ease), text-shadow 140ms var(--ease), filter 140ms var(--ease); line-height:1; display:inline-block; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.35)); }
+  .star.selected { color: var(--star-yellow); text-shadow: 0 0 16px rgba(255,204,102,0.38); transform: scale(1.06); }
+  .ratingHint { text-align:center; font-size:12px; color: rgba(223,252,255,0.62); margin-top:6px; }
+
+  .submit {
+    width:100%; height:48px; border-radius:16px; border:1px solid rgba(255,255,255,0.12); cursor:pointer; font-weight:950; letter-spacing:.2px; font-size:15px; color: rgba(3,8,18,0.96); background: linear-gradient(180deg, rgba(103,232,255,0.96), rgba(107,86,255,0.9)); box-shadow:0 22px 60px rgba(0,0,0,0.4), 0 0 42px rgba(103,232,255,0.18); transition: transform var(--speed) var(--ease), box-shadow var(--speed) var(--ease), filter var(--speed) var(--ease); }
+  .submit:hover { transform: translateY(-2px) scale(1.01); }
+  .done { display:none; text-align:center; padding:34px 12px 28px; }
+  .done strong { display:block; font-size:20px; color: var(--text); margin-bottom:8px; }
+  .done span { display:block; color: rgba(223,252,255,0.68); font-size:13px; line-height:1.4; margin-bottom:14px; }
+  .doneBtn { height:44px; padding:0 14px; border-radius:14px; border:1px solid rgba(103,232,255,0.12); background: rgba(3,8,18,0.18); color: var(--text); cursor:pointer; font-weight:900; }
+
+  @media (max-width:420px){ .panel{ padding:12px; border-radius:18px; } .stars{ font-size:38px; gap:8px; } }
 </style>
 </head>
 <body>
+  <div class="grid"></div>
+  <div class="grain"></div>
 
-<div class="center">
-    <button class="main-btn" onclick="window.location.href='https://proxy.texas-projects.xyz'">Rat Games Proxy</button>
-</div>
+  <div class="wrap">
+    <div class="panel" id="panel">
+      <div class="panelInner">
+        <div class="header">
+          <h2>Share Your Thoughts</h2>
+          <p class="sub">Quick feedback or a game request — it sends straight to the webhook.</p>
+        </div>
 
-<div class="bottom">
-<h2>Alternative Unblockers</h2>
-<div class="button-grid">
-    <button class="alt-btn" onclick="window.location.href='https://proxy.texas-projects.xyz'">Texas Proxy</button>
-    <button class="alt-btn" onclick="window.location.href='https://nowgg.fun'">NowGG Android (VM)</button>
-    <button class="alt-btn" onclick="window.location.href='https://viewoncloud.com'">View On Cloud (VM)</button>
-    <button class="alt-btn" onclick="window.location.href='https://www.browserling.com/browse/win10/chrome126/https://ratgames.vercel.app'">Browserling Windows (VM)</button>
-    <button class="alt-btn" onclick="window.location.href='https://www.browserling.com/browse/android14/chrome126/https://ratgames.vercel.app'">Browserling Android (VM)</button>
-    <button class="alt-btn" onclick="window.location.href='https://uvv2.rhw.one/'">Ultraviolet Unbl0ck3r (Proxy)</button>
-</div>
-</div>
+        <div class="form" id="form">
+          <div>
+            <label for="email">1. Email <small>(optional)</small></label>
+            <div class="field">
+              <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+            </div>
+          </div>
+
+          <div>
+            <label>2. Which one</label>
+            <div class="types" role="tablist" aria-label="Type selector">
+              <button class="tbtn active" data-type="Feedback" type="button">Feedback</button>
+              <button class="tbtn" data-type="Request Game" type="button">Request</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="message">3. Thoughts</label>
+            <div class="field">
+              <textarea id="message" placeholder="Tell me what you think"></textarea>
+            </div>
+          </div>
+
+          <div>
+            <label>4. Rate <small>(1–5)</small></label>
+            <div class="starsWrap">
+              <div class="stars" id="stars" role="radiogroup" aria-label="Rate 1 to 5">
+                <span class="star" role="radio" aria-checked="false" tabindex="0" data-value="1">★</span>
+                <span class="star" role="radio" aria-checked="false" tabindex="0" data-value="2">★</span>
+                <span class="star" role="radio" aria-checked="false" tabindex="0" data-value="3">★</span>
+                <span class="star" role="radio" aria-checked="false" tabindex="0" data-value="4">★</span>
+                <span class="star" role="radio" aria-checked="false" tabindex="0" data-value="5">★</span>
+              </div>
+              <div class="ratingHint" id="ratingHint">No rating yet</div>
+            </div>
+          </div>
+
+          <button class="submit" id="submitBtn">Submit Feedback</button>
+        </div>
+
+        <div class="done" id="done">
+          <strong>We got your request.</strong>
+          <span>Thanks — it's been sent. You can submit another one if you want.</span>
+          <button class="doneBtn" id="againBtn" type="button">Send another</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const tbtns = Array.from(document.querySelectorAll('.tbtn'));
+  const stars = Array.from(document.querySelectorAll('.star'));
+  const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById('form');
+  const done = document.getElementById('done');
+  const againBtn = document.getElementById('againBtn');
+  const ratingHint = document.getElementById('ratingHint');
+  let selectedType = 'Feedback';
+  let rating = 0;
+
+  tbtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tbtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedType = btn.dataset.type || 'Feedback';
+      submitBtn.textContent = selectedType === 'Request Game' ? 'Submit Request' : 'Submit Feedback';
+    });
+  });
+
+  function paintStars(v){
+    stars.forEach(x => {
+      const on = Number(x.dataset.value) <= v;
+      x.classList.toggle('selected', on);
+      x.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+  }
+
+  function setRating(v){
+    rating = v;
+    paintStars(rating);
+    ratingHint.textContent = rating ? (rating === 1 ? '1 star' : `${rating} stars`) : 'No rating yet';
+  }
+
+  stars.forEach(s => {
+    const v = Number(s.dataset.value);
+    s.addEventListener('click', () => setRating(v));
+    s.addEventListener('mouseover', () => paintStars(v));
+    s.addEventListener('mouseout', () => paintStars(rating));
+  });
+
+  const WEBHOOK = 'https://discord.com/api/webhooks/1523516637028946000/PIIbWkO0oRyVjo6JwPadD3iZpF5wL7plmLbhujkaQ862R6KMhtzneh66z-4UvioBOoaP';
+
+  async function send(){
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const payload = {
+      content: '**New Website Feedback**',
+      embeds: [{
+        title: selectedType,
+        color: 1084165,
+        fields: [
+          { name: 'Email', value: email || 'No email provided' },
+          { name: 'Message', value: message || 'No message' },
+          { name: 'Rating', value: rating ? `${rating} / 5` : 'No rating' }
+        ]
+      }]
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    try {
+      await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    } catch (e) {
+      // no-op
+    } finally {
+      form.style.display = 'none';
+      done.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = selectedType === 'Request Game' ? 'Submit Request' : 'Submit Feedback';
+    }
+  }
+
+  submitBtn.addEventListener('click', send);
+  againBtn.addEventListener('click', () => {
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+    tbtns.forEach(b => b.classList.remove('active'));
+    tbtns[0].classList.add('active');
+    selectedType = 'Feedback';
+    submitBtn.textContent = 'Submit Feedback';
+    setRating(0);
+    done.style.display = 'none';
+    form.style.display = 'flex';
+  });
+
+  setRating(0);
+</script>
 </body>
 </html>
