@@ -1,166 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Rat Games Settings</title>
-<style>
-  /* Reset */
-  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Settings</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-  :root {
-    --accent-color: #c0622f;
-    --bg-dark: #1a1008;
-    --glass-bg: rgba(255,235,200,0.05);
-    --glass-border: rgba(255,235,200,0.12);
-  }
+    :root {
+      --bg0: #060b1a;
+      --bg1: #0b1220;
+      --bg2: #111827;
+      --panel: rgba(11, 17, 34, 0.76);
+      --stroke: rgba(103, 232, 255, 0.2);
+      --text: #dffcff;
+      --muted: #9ac7d3;
+      --accent: #67e8ff;
+      --accent-2: #8b5cf6;
+      --accent-3: #ff4fd8;
+      --shadow: rgba(103, 232, 255, 0.25);
+    }
 
-  body{
-    height:100vh;
-    background: transparent;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#f0e0c8;
-    overflow:hidden;
-    position:relative;
-    flex-direction:column;
-    gap:40px;
-  }
+    body {
+      height:100vh;
+      background: transparent;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color: var(--text);
+      overflow:hidden;
+      position:relative;
+      flex-direction:column;
+      gap:40px;
+    }
 
-  /* Warm overlay */
-  body::before{
-    content:'';
-    position:fixed;
-    inset:0;
-    background:rgba(20,10,4,0.55);
-    z-index:0;
-    pointer-events:none;
-  }
+    body::before {
+      content:'';
+      position:fixed;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(6,11,26,0.18) 0%, rgba(6,11,26,0.45) 50%, rgba(6,11,26,0.7) 100%);
+      z-index:0;
+      pointer-events:none;
+    }
 
-  /* Title */
-  h1{
-    font-size:6rem;
-    font-weight:700;
-    text-align:center;
-    z-index:1;
-    position:relative;
-    animation:float 6s ease-in-out infinite;
-    text-shadow:0 0 10px rgba(255,255,255,0.2),0 0 20px rgba(192,98,47,0.3);
-  }
-  @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-15px)}100%{transform:translateY(0)}}
+    h1 {
+      font-size:6rem;
+      font-weight:700;
+      text-align:center;
+      z-index:1;
+      position:relative;
+      animation:float 6s ease-in-out infinite;
+      text-shadow:0 0 10px rgba(103, 232, 255, 0.25), 0 0 20px rgba(139, 92, 246, 0.2), 0 0 40px rgba(103, 232, 255, 0.18);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    @keyframes float { 0% { transform:translateY(0); } 50% { transform:translateY(-15px); } 100% { transform:translateY(0); } }
 
-  /* Settings container */
-  .settings-container{
-    z-index:1;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:20px;
-    background:rgba(0,0,0,0.3);
-    padding:30px 50px;
-    border-radius:20px;
-    box-shadow:0 0 30px rgba(0,0,0,0.5);
-  }
+    .settings-container {
+      z-index:1;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:20px;
+      background: rgba(11, 17, 34, 0.72);
+      padding:30px 50px;
+      border-radius:20px;
+      box-shadow: 0 0 30px rgba(6,11,26,0.5), 0 0 0 1px rgba(103,232,255,0.08) inset;
+      border: 1px solid var(--stroke);
+    }
 
-  label{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    font-size:1.8rem;
-    cursor:pointer;
-    user-select:none;
-  }
+    label {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:1.8rem;
+      cursor:pointer;
+      user-select:none;
+      color: var(--text);
+    }
 
-  /* Custom toggle */
-  input[type="checkbox"]{
-    appearance:none;
-    width:50px;
-    height:28px;
-    background:#2b1a0e;
-    border-radius:14px;
-    position:relative;
-    outline:none;
-    cursor:pointer;
-    transition:0.3s;
-  }
+    input[type="checkbox"] {
+      appearance:none;
+      width:50px;
+      height:28px;
+      background:#0f172a;
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      position:relative;
+      outline:none;
+      cursor:pointer;
+      transition:0.3s;
+    }
 
-  input[type="checkbox"]::before{
-    content:'';
-    position:absolute;
-    top:2px;
-    left:2px;
-    width:24px;
-    height:24px;
-    background:#f0e0c8;
-    border-radius:50%;
-    transition:0.3s;
-  }
+    input[type="checkbox"]::before {
+      content:'';
+      position:absolute;
+      top:2px;
+      left:2px;
+      width:24px;
+      height:24px;
+      background: var(--text);
+      border-radius:50%;
+      transition:0.3s;
+    }
 
-  input[type="checkbox"]:checked{
-    background:#c0622f;
-  }
-  input[type="checkbox"]:checked::before{
-    transform: translateX(22px);
-  }
+    input[type="checkbox"]:checked { background: var(--accent); }
+    input[type="checkbox"]:checked::before { transform: translateX(22px); }
 
-  /* Footer */
-  footer{
-    position:absolute;
-    bottom:20px;
-    display:flex;
-    gap:30px;
-    font-size:1.5rem;
-    align-items:center;
-    z-index:1;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
+    footer {
+      position:absolute;
+      bottom:20px;
+      display:flex;
+      gap:30px;
+      font-size:1.5rem;
+      align-items:center;
+      z-index:1;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
 
-  footer span{
-    display:flex;
-    align-items:center;
-    position:relative;
-    padding:0 6px;
-  }
+    footer span {
+      display:flex;
+      align-items:center;
+      position:relative;
+      padding:0 6px;
+      color: var(--text);
+    }
 
-  footer > span:not(:last-child)::after{
-    content:'';
-    position:absolute;
-    right:0;
-    top:50%;
-    transform:translateY(-50%);
-    width:1px;
-    height:60%;
-    background:rgba(255,255,255,0.3);
-  }
+    footer > span:not(:last-child)::after {
+      content:'';
+      position:absolute;
+      right:0;
+      top:50%;
+      transform:translateY(-50%);
+      width:1px;
+      height:60%;
+      background: rgba(103,232,255,0.3);
+    }
 
-  a{ color:#f0e0c8; text-decoration:none }
-  a:hover{ text-decoration:underline }
+    a { color: var(--text); text-decoration:none; }
+    a:hover { text-decoration:underline; }
 
-  /* Clock */
-  #time{ display:flex; align-items:center; gap:2px; }
-  .seconds{ color:rgba(240,224,200,0.4); font-weight:400; margin-left:-5px; }
-  .ampm{ color:rgba(240,224,200,0.5); font-size:0.8em; margin-left:-8px; }
+    #time{ display:flex; align-items:center; gap:2px; }
+    .seconds{ color: rgba(223,252,255,0.7); font-weight:400; margin-left:-5px; }
+    .ampm{ color: rgba(223,252,255,0.8); font-size:0.8em; margin-left:-8px; }
 
-  /* Battery */
-  .battery{ display:flex; align-items:center; gap:3px; }
-  .battery svg{ width:24px; height:24px; stroke:#f0e0c8; }
+    .battery{ display:flex; align-items:center; gap:3px; }
+    .battery svg{ width:24px; height:24px; stroke: var(--text); }
 
-  @media (max-width:600px){
-    footer{ flex-direction:column; gap:12px; bottom:10px; font-size:1.1rem }
-    footer span:not(:last-child)::after{ display:none }
-    h1{ font-size:4rem }
-    .settings-container{ padding:20px 30px }
-    label{ font-size:1.4rem; gap:8px }
-    input[type="checkbox"]{ width:40px; height:22px }
-    input[type="checkbox"]::before{ width:18px; height:18px }
-  }
-</style>
+    @media (max-width:600px){
+      footer{ flex-direction:column; gap:12px; bottom:10px; font-size:1.1rem }
+      footer span:not(:last-child)::after{ display:none }
+      h1{ font-size:4rem }
+      .settings-container{ padding:20px 30px }
+      label{ font-size:1.4rem; gap:8px }
+      input[type="checkbox"]{ width:40px; height:22px }
+      input[type="checkbox"]::before{ width:18px; height:18px }
+    }
+  </style>
 </head>
 <body>
-  <h1>Rat Games Settings</h1>
+  <h1>Settings</h1>
 
   <div class="settings-container">
     <label>
@@ -184,17 +185,14 @@
   </footer>
 
 <script>
-  // Load saved proxy setting
   const checkbox = document.getElementById('proxy-toggle');
   checkbox.checked = localStorage.getItem('useProxy') === 'true';
 
-  // Save setting on toggle
   checkbox.addEventListener('change', () => {
     localStorage.setItem('useProxy', checkbox.checked);
     alert(`Proxy setting ${checkbox.checked ? 'enabled' : 'disabled'}`);
   });
 
-  // Clock with 12-hour format and AM/PM
   function updateTime(){
     const now = new Date();
     let hh = now.getHours();
@@ -207,7 +205,6 @@
   setInterval(updateTime,1000);
   updateTime();
 
-  // Battery percentage
   const batteryText = document.getElementById('battery-text');
   if (navigator.getBattery){
     navigator.getBattery().then(b => {
